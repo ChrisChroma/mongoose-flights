@@ -1,3 +1,30 @@
 <%- include('../partials/header') %>
-<h1>This is the index page</h1>
+
+<table>
+    <thead>
+        <tr>
+            <th>Flight</th>
+            <th>Airline</th>
+            <th>Airport</th>
+            <th>Departure Date</th>
+            <th>Delete</th>
+        </tr>
+    </thead>
+    <tbody>
+        <% flights.forEach(function(f){ %>
+            <tr>
+                <td><%= f.flightNo %></td>
+                <td><%= f.airline %></td>
+                <td><%= f.airport %></td>
+                <td><%= f.departs %></td>
+                <td>
+                    <form action="/flights/<%= f._id %>?_method=DELETE" method="POST">
+                        <button type="submit">X</button>
+                    </form>
+                </td>
+            </tr>
+        <% }) %>
+    </tbody>
+</table>
+
 <%- include('../partials/footer') %>
