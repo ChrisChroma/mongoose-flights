@@ -1,3 +1,58 @@
 <%- include('../partials/header') %>
-<h1>This is the show page</h1>
+<h1>Flight Details</h1>
+<div class="row">
+  <div class="col-md-4">
+    <h3>Airline:</h3>
+    <%= flight.airline %>
+    <h3>Airport:</h3>
+    <%= flight.airport %>
+    <h3>Flight Number:</h3>
+    <%= flight.flightNo %>
+    <h3>Departure:</h3>
+    <%= flight.departs %>
+    <h3>Destinations</h3>
+    <% if (flight.destinations.length) { %>
+    <table>
+      <thead>
+        <tr>
+          <th>Airport:</th>
+          <th>Arrival:</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% flight.destinations.forEach(function(d) { %>
+        <tr>
+          <td><%= d.airport %></td>
+          <td><%= d.arrival %></td>
+        </tr>
+        <% }); %>
+      </tbody>
+    </table>
+    <% } else { %>
+    <h5>No Destinations Added Yet</h5>
+    <% } %>
+  </div>
+</div>
+<br />
+<br />
+<h2>Add Destinations</h2>
+<div>
+  <form action="/flights/show/<%= flight._id%>" method="POST">
+    <label>
+      Arrival Date:
+      <input type="datetime-local" name="arrives" /> </label
+    ><br />
+    <label
+      >Arrival Airport:
+      <select name="airport">
+        <option value="DEN">DEN</option>
+        <option value="AUS">AUS</option>
+        <option value="LAX">LAX</option>
+        <option value="DFW">DFW</option>
+        <option value="SAN">SAN</option>
+      </select> </label
+    ><br /><br />
+    <button>Add Destination</button>
+  </form>
+</div>
 <%- include('../partials/footer') %>

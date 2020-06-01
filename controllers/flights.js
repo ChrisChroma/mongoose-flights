@@ -4,13 +4,14 @@ module.exports = {
   index,
   new: newFlightView,
   create,
-  delete: deleteOne,
+  show,
+  addDest
 };
 
-function deleteOne(req, res) {
-  Flight.findByIdAndDelete(req.params.id, function (err, flight) {
-    console.log('deleted', flight)
-    res.redirect("/flights");
+function show(req, res) {
+  Flight.findById(req.params.id, function (err, flight) {
+    console.log('flight', flight)
+    res.render('flights/show', { flight })
   });
 }
 
@@ -37,3 +38,12 @@ function create(req, res) {
     res.redirect("/flights");
   });
 }
+
+function addDest(req, res){
+    Flight.findById(req.params.id, function(err, flight){
+        flight.destinations.push(req.body);
+        flight.save(function(err){
+            res.redirect(`/flights/${req.params.id}`);
+        })
+    });
+};
