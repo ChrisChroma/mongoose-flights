@@ -1,7 +1,7 @@
 <%- include('../partials/header') %>
 <h1>Flight Details</h1>
 <div class="row">
-  <div class="col-md-4">
+  <div class="col-md-12">
     <h3>Airline:</h3>
     <%= flight.airline %>
     <h3>Airport:</h3>
@@ -17,15 +17,28 @@
         <tr>
           <th>Airport:</th>
           <th>Arrival:</th>
+          <th>Tickets:</th>
         </tr>
       </thead>
       <tbody>
         <% flight.destinations.forEach(function(d) { %>
-        <tr>
+        <tr class="m-3">
           <td><%= d.airport %></td>
-          <td><%= d.arrival %></td>
+          <td><%= d.arrives %></td>
+          <td>
+            <a
+              class="btn btn-primary d-inline"
+              href="http://localhost:3000/flights/<%= flight._id %>/tickets/new"
+              >Create Ticket</a
+            >
+          </td>
+          <% }); %> <% tickets.forEach(function(t) { %>
+          <td>
+            Seat: <%= t.seat %>, Price: <%= t.price %>, Flight: <%=
+            flight.flightNo %>
+          </td>
+          <% }) %>
         </tr>
-        <% }); %>
       </tbody>
     </table>
     <% } else { %>
@@ -37,14 +50,14 @@
 <br />
 <h2>Add Destinations</h2>
 <div>
-  <form action="/flights/show/<%= flight._id%>" method="POST">
+  <form action="/flights/show/<%= flight._id %>" method="POST">
     <label>
       Arrival Date:
-      <input type="datetime-local" name="arrives" /> </label
+      <input type="datetime-local" name="arrives" required /> </label
     ><br />
     <label
       >Arrival Airport:
-      <select name="airport">
+      <select name="airport" required>
         <option value="DEN">DEN</option>
         <option value="AUS">AUS</option>
         <option value="LAX">LAX</option>
